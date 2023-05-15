@@ -69,7 +69,7 @@ class Line_Tracking_With_Log:
             else:
                 self.invalid_count = self.invalid_count + 1
                 if self.invalid_count > 300000: # less than 10 seconds per testing
-                    if self.log_count > 100:
+                    if self.log_count > 10000:
                         print ('Invalid')
                         logging.info("Invalid")
                         self.log_count = 0
