@@ -22,8 +22,10 @@ class Line_Tracking_With_Log:
         GPIO.setup(self.IR02,GPIO.IN)
         GPIO.setup(self.IR03,GPIO.IN)
         self.invalid_count = 0
+        self.log_count = 0 # only log to a file every 100 loops to reduce the size of the log
     def run(self):
         while True:
+            self.log_count = self.log_count + 1
             self.LMR=0x00
             if GPIO.input(self.IR01)==True:
                 self.LMR=(self.LMR | 4)
@@ -48,21 +50,29 @@ class Line_Tracking_With_Log:
             # write the position to a log file for cloudwatch agent to upload
             if GPIO.input(self.IR01)!=True and GPIO.input(self.IR02)==True and GPIO.input(self.IR03)!=True:
                 print ('Middle')
-                logging.info("Middle")
                 self.invalid_count = 0
+                if self.log_count > 100:
+                    logging.info("Middle")
+                    self.log_count = 0
             elif GPIO.input(self.IR01)!=True and GPIO.input(self.IR02)!=True and GPIO.input(self.IR03)==True:
                 print ('Right')
-                logging.info("Right")
                 self.invalid_count = 0
+                if self.log_count > 100:
+                    logging.info("Right")
+                    self.log_count = 0
             elif GPIO.input(self.IR01)==True and GPIO.input(self.IR02)!=True and GPIO.input(self.IR03)!=True:
                 print ('Left')
-                logging.info("Left")
                 self.invalid_count = 0
+                if self.log_count > 100:
+                    logging.info("Left")
+                    self.log_count = 0
             else:
                 self.invalid_count = self.invalid_count + 1
                 if self.invalid_count > 300000: # less than 10 seconds per testing
-                    print ('Invalid')
-                    logging.info("Invalid")
+                    if self.log_count > 100:
+                        print ('Invalid')
+                        logging.info("Invalid")
+                        self.log_count = 0
 
 infrared=Line_Tracking_With_Log()
 # Main program logic follows:
