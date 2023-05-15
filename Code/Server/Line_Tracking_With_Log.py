@@ -4,7 +4,7 @@ import RPi.GPIO as GPIO
 import logging
 import datetime
 
-logging.basicConfig(filename=f"/var/log/line-tracking-position.log-{datetime.datetime.today().strftime('%Y-%m-%d')}",
+logging.basicConfig(filename=f"/var/log/line-tracking-position-{datetime.datetime.today().strftime('%Y-%m-%d')}.log",
                     filemode='a',
                     format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
                     datefmt='%H:%M:%S',
@@ -21,6 +21,7 @@ class Line_Tracking_With_Log:
         GPIO.setup(self.IR01,GPIO.IN)
         GPIO.setup(self.IR02,GPIO.IN)
         GPIO.setup(self.IR03,GPIO.IN)
+        self.invalid_count = 0
     def run(self):
         while True:
             self.LMR=0x00
@@ -48,15 +49,20 @@ class Line_Tracking_With_Log:
             if GPIO.input(self.IR01)!=True and GPIO.input(self.IR02)==True and GPIO.input(self.IR03)!=True:
                 print ('Middle')
                 logging.info("Middle")
+                self.invalid_count = 0
             elif GPIO.input(self.IR01)!=True and GPIO.input(self.IR02)!=True and GPIO.input(self.IR03)==True:
                 print ('Right')
                 logging.info("Right")
+                self.invalid_count = 0
             elif GPIO.input(self.IR01)==True and GPIO.input(self.IR02)!=True and GPIO.input(self.IR03)!=True:
                 print ('Left')
                 logging.info("Left")
+                self.invalid_count = 0
             else:
-                print ('Invalid')
-                logging.info("Invalid")
+                self.invalid_count = self.invalid_count + 1
+                if self.invalid_count > 1000:
+                    print ('Invalid')
+                    logging.info("Invalid")
 
 infrared=Line_Tracking_With_Log()
 # Main program logic follows:
