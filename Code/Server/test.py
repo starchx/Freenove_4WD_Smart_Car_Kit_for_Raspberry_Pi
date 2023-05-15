@@ -126,6 +126,26 @@ def test_Buzzer():
     except KeyboardInterrupt:
         buzzer.run('0')
         print ("\nEnd of program")
+
+from Buzzer import *
+buzzer=Buzzer()
+def test_StartBuzzer():
+    try:
+        buzzer.run('1')
+        print ("\nEnd of program")
+    except KeyboardInterrupt:
+        buzzer.run('0')
+        print ("\nEnd of program")
+
+from Buzzer import *
+buzzer=Buzzer()
+def test_StopBuzzer():
+    try:
+        buzzer.run('0')
+        print ("\nEnd of program")
+    except KeyboardInterrupt:
+        buzzer.run('0')
+        print ("\nEnd of program")
            
 # Main program logic follows:
 if __name__ == '__main__':
@@ -149,6 +169,10 @@ if __name__ == '__main__':
         test_Adc()  
     elif sys.argv[1] == 'Buzzer':   
         test_Buzzer()  
+    elif sys.argv[1] == 'StartBuzzer':   
+        test_StartBuzzer()  
+    elif sys.argv[1] == 'StopBuzzer':   
+        test_StopBuzzer()  
 
         
         
