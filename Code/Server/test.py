@@ -132,10 +132,11 @@ buzzer=Buzzer()
 def test_StartBuzzer():
     try:
         buzzer.run('1')
+        time.sleep(30)
         print ("\nEnd of program")
     except KeyboardInterrupt:
         buzzer.run('0')
-        print ("\nEnd of program")
+        print ("\nEnd of program due to Key interrupt")
 
 from Buzzer import *
 buzzer=Buzzer()
