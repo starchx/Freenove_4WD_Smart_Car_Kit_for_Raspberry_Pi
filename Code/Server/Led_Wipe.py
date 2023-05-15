@@ -126,9 +126,8 @@ led=Led()
 if __name__ == '__main__':
     print ('Program is starting ... ')
     try:
-        while True:
-            print ("Wipe")
-            led.colorWipe(led.strip, Color(0,0,0),10)
+        print ("Wipe")
+        led.colorWipe(led.strip, Color(0,0,0),10)
     except KeyboardInterrupt:  # When 'Ctrl+C' is pressed, the child program destroy() will be  executed.
         led.colorWipe(led.strip, Color(0,0,0),10)
 
