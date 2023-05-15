@@ -3,7 +3,7 @@ from Motor import *
 import RPi.GPIO as GPIO
 import logging
 
-logging.basicConfig(filename="/var/logs/line-tracking-position.log",
+logging.basicConfig(filename="/var/log/line-tracking-position.log",
                     filemode='a',
                     format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
                     datefmt='%H:%M:%S',
