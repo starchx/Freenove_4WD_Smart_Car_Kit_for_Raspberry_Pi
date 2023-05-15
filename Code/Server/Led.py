@@ -126,7 +126,8 @@ led=Led()
 if __name__ == '__main__':
     print ('Program is starting ... ')
     try:
-        while True:
+        count = 2
+        while count > 0:
             print ("Chaser animation")
             led.colorWipe(led.strip, Color(255,0, 0))  # Red wipe
             led.colorWipe(led.strip, Color(0, 255, 0))  # Green wipe
@@ -135,7 +136,8 @@ if __name__ == '__main__':
             print ("Rainbow animation")
             led.rainbow(led.strip)
             led.rainbowCycle(led.strip)
-            led.colorWipe(led.strip, Color(0,0,0),10)
+            # led.colorWipe(led.strip, Color(0,0,0),10)
+            count = count - 1
     except KeyboardInterrupt:  # When 'Ctrl+C' is pressed, the child program destroy() will be  executed.
         led.colorWipe(led.strip, Color(0,0,0),10)
 
