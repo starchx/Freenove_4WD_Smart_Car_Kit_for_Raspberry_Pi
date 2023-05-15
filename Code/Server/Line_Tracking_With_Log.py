@@ -2,8 +2,9 @@ import time
 from Motor import *
 import RPi.GPIO as GPIO
 import logging
+import datetime
 
-logging.basicConfig(filename="/var/log/line-tracking-position.log",
+logging.basicConfig(filename=f"/var/log/line-tracking-position.log-{datetime.datetime.today().strftime('%Y-%m-%d')}",
                     filemode='a',
                     format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
                     datefmt='%H:%M:%S',
@@ -53,6 +54,9 @@ class Line_Tracking_With_Log:
             elif GPIO.input(self.IR01)==True and GPIO.input(self.IR02)!=True and GPIO.input(self.IR03)!=True:
                 print ('Left')
                 logging.info("Left")
+            else:
+                print ('Invalid')
+                logging.info("Invalid")
 
 infrared=Line_Tracking_With_Log()
 # Main program logic follows:
