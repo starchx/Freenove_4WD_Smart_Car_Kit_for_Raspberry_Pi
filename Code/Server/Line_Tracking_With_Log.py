@@ -6,11 +6,9 @@ import datetime
 
 logging.basicConfig(filename=f"/var/log/line-tracking-position-{datetime.datetime.today().strftime('%Y-%m-%d')}.log",
                     filemode='a',
-                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
-                    datefmt='%H:%M:%S',
+                    format='%(asctime)s %(message)s',
+                    datefmt='%Y-%m-%d %H:%M:%S',
                     level=logging.DEBUG)
-
-logging.info("Running Line Tracking with Logs")
 
 class Line_Tracking_With_Log:
     def __init__(self):
@@ -21,11 +19,9 @@ class Line_Tracking_With_Log:
         GPIO.setup(self.IR01,GPIO.IN)
         GPIO.setup(self.IR02,GPIO.IN)
         GPIO.setup(self.IR03,GPIO.IN)
-        self.invalid_count = 0
-        self.log_count = 0 # only log to a file every 100 loops to reduce the size of the log
+        self.log_time = int(time.time()) # only log to a file every 1s to reduce the size of the log
     def run(self):
         while True:
-            self.log_count = self.log_count + 1
             self.LMR=0x00
             if GPIO.input(self.IR01)==True:
                 self.LMR=(self.LMR | 4)
@@ -50,29 +46,24 @@ class Line_Tracking_With_Log:
             # write the position to a log file for cloudwatch agent to upload
             if GPIO.input(self.IR01)!=True and GPIO.input(self.IR02)==True and GPIO.input(self.IR03)!=True:
                 print ('Middle')
-                self.invalid_count = 0
-                if self.log_count > 100:
+                if int(time.time()) > self.log_time:
                     logging.info("Middle")
-                    self.log_count = 0
+                    self.log_time = int(time.time())
             elif GPIO.input(self.IR01)!=True and GPIO.input(self.IR02)!=True and GPIO.input(self.IR03)==True:
                 print ('Right')
-                self.invalid_count = 0
-                if self.log_count > 100:
+                if int(time.time()) > self.log_time:
                     logging.info("Right")
-                    self.log_count = 0
+                    self.log_time = int(time.time())
             elif GPIO.input(self.IR01)==True and GPIO.input(self.IR02)!=True and GPIO.input(self.IR03)!=True:
                 print ('Left')
-                self.invalid_count = 0
-                if self.log_count > 100:
+                if int(time.time()) > self.log_time:
                     logging.info("Left")
-                    self.log_count = 0
+                    self.log_time = int(time.time())
             else:
-                self.invalid_count = self.invalid_count + 1
-                if self.invalid_count > 300000: # less than 10 seconds per testing
-                    if self.log_count > 10000:
-                        print ('Invalid')
-                        logging.info("Invalid")
-                        self.log_count = 0
+                print ('Invalid')
+                if int(time.time()) - self.log_time > 3: # at least 3 seconds to consider it is really invalid
+                    logging.info("Invalid")
+                    self.log_time = int(time.time())
 
 infrared=Line_Tracking_With_Log()
 # Main program logic follows:
