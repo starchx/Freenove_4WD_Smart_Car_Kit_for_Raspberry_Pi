@@ -58,7 +58,7 @@ class VideoStreaming:
     def streaming(self,ip):
         stream_bytes = b' '
         try:
-            self.client_socket.connect((ip, 8000))
+            self.client_socket.connect((ip, 8888)) # default was 8000
             self.connection = self.client_socket.makefile('rb')
         except:
             #print "command port connect failed"
@@ -91,7 +91,7 @@ class VideoStreaming:
 
     def socket1_connect(self,ip):
         try:
-            self.client_socket1.connect((ip, 5000))
+            self.client_socket1.connect((ip, 5555)) # default was 5000
             self.connect_Flag=True
             print ("Connection Successful !")
         except Exception as e:

@@ -15,10 +15,10 @@ from Command import COMMAND as cmd
 from Thread import *
 from Client_Ui import Ui_Client
 from Video import *
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import * 
+from PyQt6 import QtCore, QtGui, QtWidgets
+from PyQt6.QtCore import *
+from PyQt6.QtWidgets import *
+from PyQt6.QtGui import * 
 class mywindow(QMainWindow,Ui_Client):
     def __init__(self):
         global timer
@@ -33,25 +33,25 @@ class mywindow(QMainWindow,Ui_Client):
         self.label_FineServo2.setText("0")
         self.label_FineServo1.setText("0")
         self.m_DragPosition=self.pos()
-        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
+        self.setWindowFlags(Qt.WindowType.FramelessWindowHint | Qt.WindowType.WindowStaysOnTopHint)
         self.setMouseTracking(True)
         self.Key_W=False
         self.Key_A=False
         self.Key_S=False
         self.Key_D=False
         self.Key_Space=False
-        self.setFocusPolicy(Qt.StrongFocus)
+        self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
         self.progress_Power.setMinimum(0)
         self.progress_Power.setMaximum(100)
-        self.name.setAlignment(QtCore.Qt.AlignCenter)
+        self.name.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_Servo1.setText('90')
         self.label_Servo2.setText('90')
-        self.label_Video.setAlignment(QtCore.Qt.AlignCenter|QtCore.Qt.AlignVCenter)
-        self.label_Servo1.setAlignment(QtCore.Qt.AlignCenter|QtCore.Qt.AlignVCenter)
-        self.label_Servo2.setAlignment(QtCore.Qt.AlignCenter|QtCore.Qt.AlignVCenter)
+        self.label_Video.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter|QtCore.Qt.AlignmentFlag.AlignVCenter)
+        self.label_Servo1.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter|QtCore.Qt.AlignmentFlag.AlignVCenter)
+        self.label_Servo2.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter|QtCore.Qt.AlignmentFlag.AlignVCenter)
         
-        self.label_FineServo1.setAlignment(QtCore.Qt.AlignCenter|QtCore.Qt.AlignVCenter)
-        self.label_FineServo2.setAlignment(QtCore.Qt.AlignCenter|QtCore.Qt.AlignVCenter)
+        self.label_FineServo1.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter|QtCore.Qt.AlignmentFlag.AlignVCenter)
+        self.label_FineServo2.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter|QtCore.Qt.AlignmentFlag.AlignVCenter)
         
         self.HSlider_Servo1.setMinimum(0)
         self.HSlider_Servo1.setMaximum(180)
@@ -148,13 +148,15 @@ class mywindow(QMainWindow,Ui_Client):
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.time)
     def mousePressEvent(self, event):
-        if event.button()==Qt.LeftButton:
+        if event.button()==Qt.MouseButton.LeftButton:
+            print("mouse_left_button")
             self.m_drag=True
             self.m_DragPosition=event.globalPos()-self.pos()
             event.accept()
  
     def mouseMoveEvent(self, QMouseEvent):
-        if QMouseEvent.buttons() and Qt.LeftButton:
+        if QMouseEvent.buttons() and Qt.MouseButton.LeftButton:
+            print("mouse_left_button2")
             self.move(QMouseEvent.globalPos()-self.m_DragPosition)
             QMouseEvent.accept()
  
@@ -162,19 +164,19 @@ class mywindow(QMainWindow,Ui_Client):
         self.m_drag=False
         
     def keyPressEvent(self, event):
-        if(event.key() == Qt.Key_Up):
+        if(event.key() == Qt.Key.Key_Up):
             self.on_btn_Up()
-        elif(event.key() == Qt.Key_Left):
+        elif(event.key() == Qt.Key.Key_Left):
             self.on_btn_Left()
-        elif(event.key() == Qt.Key_Down):
+        elif(event.key() == Qt.Key.Key_Down):
             self.on_btn_Down()
-        elif(event.key() == Qt.Key_Right):
+        elif(event.key() == Qt.Key.Key_Right):
             self.on_btn_Right()
-        elif(event.key() == Qt.Key_Home):
+        elif(event.key() == Qt.Key.Key_Home):
             self.on_btn_Home()
 
 
-        if(event.key() == Qt.Key_Q):
+        if(event.key() == Qt.Key.Key_Q):
             if self.Btn_Mode1.isChecked() == True:
                 self.Btn_Mode2.setChecked(True)
             elif self.Btn_Mode2.isChecked() == True:
@@ -184,7 +186,7 @@ class mywindow(QMainWindow,Ui_Client):
             elif self.Btn_Mode4.isChecked() == True:
                 self.Btn_Mode1.setChecked(True)
 
-        if(event.key() == Qt.Key_L):
+        if(event.key() == Qt.Key.Key_L):
             count=0
             if  self.checkBox_Led_Mode1.isChecked() == True:
                 self.checkBox_Led_Mode2.setChecked(True)
@@ -204,48 +206,48 @@ class mywindow(QMainWindow,Ui_Client):
             if count ==4:
                 self.checkBox_Led_Mode1.setChecked(True)
                 
-        if(event.key() == Qt.Key_C):
+        if(event.key() == Qt.Key.Key_C):
             self.on_btn_Connect()
-        if(event.key() == Qt.Key_V):
+        if(event.key() == Qt.Key.Key_V):
             self.on_btn_video()
 
             
-        if(event.key() == Qt.Key_1):
+        if(event.key() == Qt.Key.Key_1):
             if self.checkBox_Led1.isChecked() == True:
                 self.checkBox_Led1.setChecked(False)
             else:
                 self.checkBox_Led1.setChecked(True)
-        elif(event.key() == Qt.Key_2):
+        elif(event.key() == Qt.Key.Key_2):
             if self.checkBox_Led2.isChecked() == True:
                 self.checkBox_Led2.setChecked(False)
             else:
                 self.checkBox_Led2.setChecked(True)
-        elif(event.key() == Qt.Key_3):
+        elif(event.key() == Qt.Key.Key_3):
             if self.checkBox_Led3.isChecked() == True:
                 self.checkBox_Led3.setChecked(False)
             else:
                 self.checkBox_Led3.setChecked(True)
-        elif(event.key() == Qt.Key_4):
+        elif(event.key() == Qt.Key.Key_4):
             if self.checkBox_Led4.isChecked() == True:
                 self.checkBox_Led4.setChecked(False)
             else:
                 self.checkBox_Led4.setChecked(True)
-        elif(event.key() == Qt.Key_5):
+        elif(event.key() == Qt.Key.Key_5):
             if self.checkBox_Led5.isChecked() == True:
                 self.checkBox_Led5.setChecked(False)
             else:
                 self.checkBox_Led5.setChecked(True)
-        elif(event.key() == Qt.Key_6):
+        elif(event.key() == Qt.Key.Key_6):
             if self.checkBox_Led6.isChecked() == True:
                 self.checkBox_Led6.setChecked(False)
             else:
                 self.checkBox_Led6.setChecked(True)
-        elif(event.key() == Qt.Key_7):
+        elif(event.key() == Qt.Key.Key_7):
             if self.checkBox_Led7.isChecked() == True:
                 self.checkBox_Led7.setChecked(False)
             else:
                 self.checkBox_Led7.setChecked(True)
-        elif(event.key() == Qt.Key_8):
+        elif(event.key() == Qt.Key.Key_8):
             if self.checkBox_Led8.isChecked() == True:
                 self.checkBox_Led8.setChecked(False)
             else:
@@ -255,44 +257,44 @@ class mywindow(QMainWindow,Ui_Client):
         if event.isAutoRepeat():
             pass
         else :
-            if event.key() == Qt.Key_W:
+            if event.key() == Qt.Key.Key_W:
                 self.on_btn_ForWard()
                 self.Key_W=True
-            elif event.key() == Qt.Key_S:
+            elif event.key() == Qt.Key.Key_S:
                 self.on_btn_BackWard()
                 self.Key_S=True
-            elif event.key() == Qt.Key_A:
+            elif event.key() == Qt.Key.Key_A:
                 self.on_btn_Turn_Left()
                 self.Key_A=True
-            elif event.key() == Qt.Key_D:                  
+            elif event.key() == Qt.Key.Key_D:                  
                 self.on_btn_Turn_Right()
                 self.Key_D=True  
-            elif event.key() == Qt.Key_Space:  
+            elif event.key() == Qt.Key.Key_Space:  
                 self.on_btn_Buzzer()
                 self.Key_Space=True                
 
     def keyReleaseEvent(self, event):
 
-        if(event.key() == Qt.Key_W):
+        if(event.key() == Qt.Key.Key_W):
             time.sleep(0.05)
-            if(event.key() == Qt.Key_W):
+            if(event.key() == Qt.Key.Key_W):
                 if not(event.isAutoRepeat()) and self.Key_W==True:
                     self.on_btn_Stop()
                     self.Key_W=False
-        elif(event.key() == Qt.Key_A):
+        elif(event.key() == Qt.Key.Key_A):
             if not(event.isAutoRepeat()) and self.Key_A==True:
                 self.on_btn_Stop()
                 self.Key_A=False
-        elif(event.key() == Qt.Key_S):
+        elif(event.key() == Qt.Key.Key_S):
             if not(event.isAutoRepeat()) and self.Key_S==True:
                 self.on_btn_Stop()
                 self.Key_S=False
-        elif(event.key() == Qt.Key_D):
+        elif(event.key() == Qt.Key.Key_D):
             if not(event.isAutoRepeat()) and self.Key_D==True:
                 self.on_btn_Stop()
                 self.Key_D=False
                 
-        if(event.key() == Qt.Key_Space):
+        if(event.key() == Qt.Key.Key_Space):
             if not(event.isAutoRepeat()) and self.Key_Space==True:
                 self.on_btn_Buzzer()
                 self.Key_Space=False
@@ -634,7 +636,7 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     myshow=mywindow()
     myshow.show();   
-    sys.exit(app.exec_())
+    sys.exit(app.exec()) ## .exec_())
     
 
 
