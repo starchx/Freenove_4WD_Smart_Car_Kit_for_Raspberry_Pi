@@ -36,7 +36,7 @@ class StreamingOutput(io.BufferedIOBase):
             self.condition.notify_all()
 
 class Server:   
-    def __init__(self):
+    def __init__(self, maintenance=False):
         self.PWM=Motor()
         self.servo=Servo()
         self.led=Led()
@@ -51,6 +51,7 @@ class Server:
         self.Mode = 'one'
         self.endChar='\n'
         self.intervalChar='#'
+        self.maintenance=maintenance
     def get_interface_ip(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         return socket.inet_ntoa(fcntl.ioctl(s.fileno(),
@@ -59,13 +60,19 @@ class Server:
                                             )[20:24])
     def StartTcpServer(self):
         HOST=str(self.get_interface_ip())
+        if self.maintenance is True:
+            self.server_port=5555
+            self.server_port2=8888
+        else:
+            self.server_port=5000
+            self.server_port2=8000
         self.server_socket1 = socket.socket()
         self.server_socket1.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEPORT,1)
-        self.server_socket1.bind((HOST, 5000))
+        self.server_socket1.bind((HOST, self.server_port))
         self.server_socket1.listen(1)
         self.server_socket = socket.socket()
         self.server_socket.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEPORT,1)
-        self.server_socket.bind((HOST, 8000))              
+        self.server_socket.bind((HOST, self.server_port2))              
         self.server_socket.listen(1)
         print('Server address: '+HOST)      
         

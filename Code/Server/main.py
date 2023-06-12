@@ -20,8 +20,9 @@ class mywindow(QMainWindow,Ui_server_ui):
     def __init__(self):
         self.user_ui=True
         self.start_tcp=False
-        self.TCP_Server=Server()
+        self.maintenance=False
         self.parseOpt()
+        self.TCP_Server=Server(maintenance=self.maintenance)
         if self.user_ui:
             self.app = QApplication(sys.argv)
             super(mywindow,self).__init__()
@@ -71,6 +72,9 @@ class mywindow(QMainWindow,Ui_server_ui):
                 self.start_tcp=True
             elif o in ('-n'):
                 self.user_ui=False
+            elif o in ('-m'):
+                print ("enable maintenance mode")
+                self.maintenance=True
                         
     def close(self):
         try:
