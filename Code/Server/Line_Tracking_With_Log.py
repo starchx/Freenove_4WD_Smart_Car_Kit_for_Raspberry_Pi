@@ -7,7 +7,7 @@ import datetime
 logging.basicConfig(filename=f"/var/log/line-tracking-position-{datetime.datetime.today().strftime('%Y-%m-%d')}.log",
                     filemode='a',
                     format='%(asctime)s %(message)s',
-                    datefmt='%Y-%m-%d %H:%M:%S',
+                    datefmt='%Y-%m-%dT%H:%M:%S',
                     level=logging.DEBUG)
 
 class Line_Tracking_With_Log:
