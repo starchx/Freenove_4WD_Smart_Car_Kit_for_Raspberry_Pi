@@ -65,7 +65,7 @@ class mywindow(QMainWindow,Ui_server_ui):
         self.m_drag=False
         
     def parseOpt(self):
-        self.opts,self.args = getopt.getopt(sys.argv[1:],"tn")
+        self.opts,self.args = getopt.getopt(sys.argv[1:],"tnm")
         for o,a in self.opts:
             if o in ('-t'):
                 print ("Open TCP")
