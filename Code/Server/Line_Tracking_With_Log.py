@@ -45,23 +45,23 @@ class Line_Tracking_With_Log:
             
             # write the position to a log file for cloudwatch agent to upload
             if GPIO.input(self.IR01)!=True and GPIO.input(self.IR02)==True and GPIO.input(self.IR03)!=True:
-                print ('Middle')
                 if int(time.time()) > self.log_time:
+                    print ('Middle')
                     logging.info("Middle")
                     self.log_time = int(time.time())
             elif GPIO.input(self.IR01)!=True and GPIO.input(self.IR02)!=True and GPIO.input(self.IR03)==True:
-                print ('Right')
                 if int(time.time()) > self.log_time:
+                    print ('Right')
                     logging.info("Right")
                     self.log_time = int(time.time())
             elif GPIO.input(self.IR01)==True and GPIO.input(self.IR02)!=True and GPIO.input(self.IR03)!=True:
-                print ('Left')
                 if int(time.time()) > self.log_time:
+                    print ('Left')
                     logging.info("Left")
                     self.log_time = int(time.time())
             else:
-                print ('Invalid')
                 if int(time.time()) - self.log_time > 3: # at least 3 seconds to consider it is really invalid
+                    print ('Invalid')
                     logging.info("Invalid")
                     self.log_time = int(time.time())
 
