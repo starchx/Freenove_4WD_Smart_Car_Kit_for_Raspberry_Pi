@@ -126,7 +126,7 @@ led=Led()
 if __name__ == '__main__':
     print ('Program is starting ... ')
     try:
-        count = 2
+        count = 1 # how many loops of flashing light
         while count > 0:
             print ("Chaser animation")
             led.colorWipe(led.strip, Color(255,0, 0))  # Red wipe
