@@ -12,7 +12,7 @@ LED_BRIGHTNESS = 255     # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
 LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 # Define functions which animate LEDs in various ways.
-class Led:
+class Led_Rainbow:
     def __init__(self):
         #Control the sending order of color data
         self.ORDER = "RGB"  
@@ -121,18 +121,16 @@ class Led:
             else:
                 self.colorWipe(self.strip, Color(0,0,0),10)
                 break
-led=Led()                 
+led=Led_Rainbow()                 
 # Main program logic follows:
 if __name__ == '__main__':
     print ('Program is starting ... ')
     try:
         count = 1 # how many loops of flashing light
         while count > 0:
-            print ("Chaser animation")
-            led.colorWipe(led.strip, Color(255,0, 0))  # Red wipe
-            led.colorWipe(led.strip, Color(0, 255, 0))  # Green wipe
-            led.colorWipe(led.strip, Color(0, 0, 255))  # Blue wipe
-            led.theaterChaseRainbow(led.strip)
+            print ("Rainbow animation")
+            led.rainbow(led.strip)
+            led.rainbowCycle(led.strip)
             # led.colorWipe(led.strip, Color(0,0,0),10)
             count = count - 1
     except KeyboardInterrupt:  # When 'Ctrl+C' is pressed, the child program destroy() will be  executed.
