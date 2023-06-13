@@ -60,7 +60,7 @@ class Line_Tracking_With_Log:
                     #logging.info("Left")
                     self.log_time = int(time.time())
             else:
-                if int(time.time()) - self.log_time > 0: # at least 1 seconds to consider it is really invalid
+                if int(time.time()) - self.log_time > 1: # at least 1 seconds to consider it is really invalid
                     print ('Invalid')
                     logging.info("Invalid")
                     self.log_time = int(time.time())
