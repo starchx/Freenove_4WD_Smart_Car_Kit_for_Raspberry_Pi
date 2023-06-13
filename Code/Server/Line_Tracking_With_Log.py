@@ -47,20 +47,20 @@ class Line_Tracking_With_Log:
             if GPIO.input(self.IR01)!=True and GPIO.input(self.IR02)==True and GPIO.input(self.IR03)!=True:
                 if int(time.time()) > self.log_time:
                     print ('Middle')
-                    logging.info("Middle")
+                    #logging.info("Middle")
                     self.log_time = int(time.time())
             elif GPIO.input(self.IR01)!=True and GPIO.input(self.IR02)!=True and GPIO.input(self.IR03)==True:
                 if int(time.time()) > self.log_time:
                     print ('Right')
-                    logging.info("Right")
+                    #logging.info("Right")
                     self.log_time = int(time.time())
             elif GPIO.input(self.IR01)==True and GPIO.input(self.IR02)!=True and GPIO.input(self.IR03)!=True:
                 if int(time.time()) > self.log_time:
                     print ('Left')
-                    logging.info("Left")
+                    #logging.info("Left")
                     self.log_time = int(time.time())
             else:
-                if int(time.time()) - self.log_time > 3: # at least 3 seconds to consider it is really invalid
+                if int(time.time()) - self.log_time > 0: # at least 1 seconds to consider it is really invalid
                     print ('Invalid')
                     logging.info("Invalid")
                     self.log_time = int(time.time())
